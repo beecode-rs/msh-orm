@@ -1,0 +1,165 @@
+@startuml
+    folder "src" as src_b874d07 {
+      folder "memory" as memory_2745eb49 {
+        abstract "MemoryCommonDalImplementation" as memory_common_dal_implementation_ffe25155 {
+          + EntityName: string
+          # _Repo: Entity[]
+          # _dbMemory: { [key: string]: any[] }
+          # _dbMockFileLocation
+          # _edit(entity: Partial<Entity>): Entity
+          # _entityName: string
+          # _findOneWhere(entity: Partial<Entity>): {\n index: number;\n entity: Entity \n}
+          # _findWhere(params: Partial<OrmFilterOptions & OrmPagingOptions>): Entity[]
+          # _fixedProperties: OrmFilterOption
+          # _generateUniqueId: any
+          # _predefinedMock: any
+          # _removeEntity(entity: Partial<Entity>): void
+          + addBulk(entities: Partial<Entity>[]): Promise<Entity[]>
+          # constructor(params: {\n    entityName: string\n    fixedProperties?: OrmFilterOption\n    predefinedMock?: any\n    dbMockFileLocation: string\n  })
+          + editBulk(entities: Partial<Entity>[]): Promise<Entity[]>
+          + findMany(params?: OrmFindManyOptions): Promise<Entity[]>
+          + findOne(params: OrmFindOneOptions): Promise<Entity>
+          + findOneById(id: string): Promise<Entity>
+          + removeBulk(entities: Entity[]): Promise<void>
+          + removeByIds(ids: string[]): Promise<void>
+        }
+        object "memoryFilter" as memory_filter_92d4bb83 {
+          + filter(params: {\n data: Entity[];\n filter?: OrmFilterOption \n}): Entity[]
+        }
+        object "memoryOrmUtil" as memory_orm_util_a491a15a {
+          + isFilterOptionAnyObject(filter: OrmFilterOption): boolean
+          + notInArrays(originalArray: Entity[],\n notInArrays: Entity[][]): Entity[]
+          + simplifyObject(value: any): any
+          + uniqueArray(arrays: Entity[][]): Entity[]
+          + valueIsArray(value: any): boolean
+          + valueIsDate(value: any): boolean
+          + valueIsObject(value: any): boolean
+        }
+        object "memoryPagination" as memory_pagination_6b93d0af {
+          + paginate(data: Entity[],\n pagination?: Pagination): Entity[]
+        }
+        folder "comparison-strategy" as comparison_strategy_c2c922a9 {
+          class "MemoryBetweenStrategy" as memory_between_strategy_521b257f {
+            + filter(params: {\n data: Entity[];\n keys: string[];\n filter: any \n}): Entity[]
+            + isOperationAllowed(key: string): void
+          }
+          object "memoryComparisonService" as memory_comparison_service_129f4c2a {
+            + getComparisonStrategyFromKey(params: { key: string }): MemoryComparisonStrategy<Entity> | undefined
+          }
+          interface "MemoryComparisonStrategy" as memory_comparison_strategy_664f732c {
+            + filter(params: {\n data: Entity[];\n keys: string[];\n filter: any \n}): Entity[]
+            + isOperationAllowed(key: string): void
+          }
+          class "MemoryEqStrategy" as memory_eq_strategy_eba67c41 {
+            + filter(params: {\n data: Entity[];\n keys: string[];\n filter: OrmFilterOption \n}): Entity[]
+            + isOperationAllowed(_key: string): void
+          }
+          class "MemoryGtStrategy" as memory_gt_strategy_407e09e6 {
+            + filter(params: {\n data: Entity[];\n keys: string[];\n filter: OrmFilterOption \n}): Entity[]
+            + isOperationAllowed(key: string): void
+          }
+          class "MemoryGteStrategy" as memory_gte_strategy_3c9bbbc3 {
+            + filter(params: {\n data: Entity[];\n keys: string[];\n filter: OrmFilterOption \n}): Entity[]
+            + isOperationAllowed(key: string): void
+          }
+          class "MemoryInStrategy" as memory_in_strategy_28455ab2 {
+            + filter(params: {\n data: Entity[];\n keys: string[];\n filter: OrmFilterOption \n}): Entity[]
+            + isOperationAllowed(_key: string): void
+          }
+          class "MemoryLtStrategy" as memory_lt_strategy_b253aaed {
+            + filter(params: {\n data: Entity[];\n keys: string[];\n filter: OrmFilterOption \n}): Entity[]
+            + isOperationAllowed(key: string): void
+          }
+          class "MemoryLteStrategy" as memory_lte_strategy_574b848 {
+            + filter(params: {\n data: Entity[];\n keys: string[];\n filter: OrmFilterOption \n}): Entity[]
+            + isOperationAllowed(key: string): void
+          }
+          class "MemoryNeqStrategy" as memory_neq_strategy_3c583bef {
+            + filter(params: {\n data: Entity[];\n keys: string[];\n filter: OrmFilterOption \n}): Entity[]
+            + isOperationAllowed(key: string): void
+          }
+        }
+        folder "logical-strategy" as logical_strategy_c71ac013 {
+          class "MemoryAndStrategy" as memory_and_strategy_c31ee644 {
+            # _comparisonStrategy: MemoryComparisonStrategy<Entity>
+            # _filter: OrmFilterOption
+            # _filterIndividualStatement(params: {\n    keyOperation: OrmFilterOperationsKey\n    valFilter: OrmFilterOption\n    data: Entity[]\n    keys: string[]\n  }): Entity[]
+            # _parentKeys: string[]
+            + constructor(params: {\n    filter: OrmFilterOption\n    parentKeys?: string[]\n    comparisonStrategy: MemoryComparisonStrategy<Entity>\n  })
+            + filter(params: {\n data: Entity[];\n keys?: string[] \n}): Entity[]
+          }
+          object "memoryLogicalService" as memory_logical_service_885b1daa {
+            + getLogicalStrategyFromKey(params: {
+                key: string
+                filter: OrmFilterOption
+                parentKeys: string[]
+                comparisonStrategy: MemoryComparisonStrategy<Entity>
+              }): MemoryLogicalStrategy<Entity> | undefined
+          }
+          interface "MemoryLogicalStrategy" as memory_logical_strategy_3f36842c {
+            + filter(params: {\n data: Entity[];\n keys?: string[] \n}): Entity[]
+          }
+          class "MemoryNotStrategy" as memory_not_strategy_51941c3a {
+            # _comparisonStrategy: MemoryComparisonStrategy<Entity>
+            # _filter: OrmFilterOption
+            # _parentKeys: string[]
+            + constructor(params: {\n    filter: OrmFilterOption\n    parentKeys?: string[]\n    comparisonStrategy: MemoryComparisonStrategy<Entity>\n  })
+            + filter(params: {\n data: Entity[];\n keys?: string[] \n}): Entity[]
+          }
+          class "MemoryOrStrategy" as memory_or_strategy_a63d7372 {
+            # _comparisonStrategy: MemoryComparisonStrategy<Entity>
+            # _filter: OrmFilterOption
+            # _parentKeys: string[]
+            + constructor(params: {\n    filter: OrmFilterOption\n    parentKeys?: string[]\n    comparisonStrategy: MemoryComparisonStrategy<Entity>\n  })
+            + filter(params: {\n data: Entity[];\n keys?: string[] \n}): Entity[]
+          }
+        }
+      }
+    }
+  memory_between_strategy_521b257f -up-> memory_orm_util_a491a15a
+  memory_between_strategy_521b257f .up.|> memory_comparison_strategy_664f732c
+  memory_comparison_service_129f4c2a -up-> memory_between_strategy_521b257f
+  memory_comparison_service_129f4c2a -up-> memory_gt_strategy_407e09e6
+  memory_comparison_service_129f4c2a -up-> memory_gte_strategy_3c9bbbc3
+  memory_comparison_service_129f4c2a -up-> memory_in_strategy_28455ab2
+  memory_comparison_service_129f4c2a -up-> memory_lt_strategy_b253aaed
+  memory_comparison_service_129f4c2a -up-> memory_lte_strategy_574b848
+  memory_comparison_service_129f4c2a -up-> memory_neq_strategy_3c583bef
+  memory_eq_strategy_eba67c41 .up.|> memory_comparison_strategy_664f732c
+  memory_gt_strategy_407e09e6 -up-> memory_orm_util_a491a15a
+  memory_gt_strategy_407e09e6 .up.|> memory_comparison_strategy_664f732c
+  memory_gte_strategy_3c9bbbc3 -up-> memory_orm_util_a491a15a
+  memory_gte_strategy_3c9bbbc3 .up.|> memory_comparison_strategy_664f732c
+  memory_in_strategy_28455ab2 .up.|> memory_comparison_strategy_664f732c
+  memory_lt_strategy_b253aaed -up-> memory_orm_util_a491a15a
+  memory_lt_strategy_b253aaed .up.|> memory_comparison_strategy_664f732c
+  memory_lte_strategy_574b848 -up-> memory_orm_util_a491a15a
+  memory_lte_strategy_574b848 .up.|> memory_comparison_strategy_664f732c
+  memory_neq_strategy_3c583bef -up-> memory_orm_util_a491a15a
+  memory_neq_strategy_3c583bef -up-> memory_eq_strategy_eba67c41
+  memory_neq_strategy_3c583bef .up.|> memory_comparison_strategy_664f732c
+  memory_and_strategy_c31ee644 -up-> memory_comparison_service_129f4c2a
+  memory_and_strategy_c31ee644 -up-> memory_comparison_strategy_664f732c
+  memory_and_strategy_c31ee644 -up-> memory_orm_util_a491a15a
+  memory_and_strategy_c31ee644 -up-> memory_logical_service_885b1daa
+  memory_and_strategy_c31ee644 -up-> memory_and_strategy_c31ee644
+  memory_and_strategy_c31ee644 .up.|> memory_logical_strategy_3f36842c
+  memory_logical_service_885b1daa -up-> memory_comparison_strategy_664f732c
+  memory_logical_service_885b1daa -up-> memory_and_strategy_c31ee644
+  memory_logical_service_885b1daa -up-> memory_not_strategy_51941c3a
+  memory_logical_service_885b1daa -up-> memory_or_strategy_a63d7372
+  memory_not_strategy_51941c3a -up-> memory_comparison_strategy_664f732c
+  memory_not_strategy_51941c3a -up-> memory_eq_strategy_eba67c41
+  memory_not_strategy_51941c3a -up-> memory_orm_util_a491a15a
+  memory_not_strategy_51941c3a -up-> memory_and_strategy_c31ee644
+  memory_not_strategy_51941c3a .up.|> memory_logical_strategy_3f36842c
+  memory_or_strategy_a63d7372 -up-> memory_comparison_strategy_664f732c
+  memory_or_strategy_a63d7372 -up-> memory_orm_util_a491a15a
+  memory_or_strategy_a63d7372 -up-> memory_and_strategy_c31ee644
+  memory_or_strategy_a63d7372 .up.|> memory_logical_strategy_3f36842c
+  memory_common_dal_implementation_ffe25155 -up-> memory_pagination_6b93d0af
+  memory_common_dal_implementation_ffe25155 -up-> memory_common_dal_implementation_ffe25155
+  memory_filter_92d4bb83 -up-> memory_eq_strategy_eba67c41
+  memory_filter_92d4bb83 -up-> memory_and_strategy_c31ee644
+  memory_orm_util_a491a15a -up-> memory_orm_util_a491a15a
+@enduml

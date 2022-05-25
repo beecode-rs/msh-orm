@@ -1,9 +1,23 @@
 {
   "collectCoverage": true,
-  "collectCoverageFrom": ["src/**/*.ts", "!src/**/*.{contract,d}.ts"],
+  "collectCoverageFrom": [
+    "src/**/*.ts",
+    "!src/**/*.{contract,d}.ts"
+  ],
+  "maxConcurrency": 1,
   "preset": "ts-jest",
-  "roots": ["./src"],
-  "setupFilesAfterEnv": ["jest-extended/all"],
+  "roots": [
+    "<rootDir>/src"
+  ],
+  "setupFilesAfterEnv": [
+    "jest-extended/all"
+  ],
   "testEnvironment": "node",
-  "testPathIgnorePatterns": ["/node_modules/", "/test/"]
+  "testMatch": [
+    "<rootDir>/src/**/*.test.ts"
+  ],
+  "testPathIgnorePatterns": [
+    "/node_modules/",
+    "/test/"
+  ]
 }

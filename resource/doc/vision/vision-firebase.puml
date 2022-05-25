@@ -1,0 +1,19 @@
+@startuml
+    folder "src/firebase" as src_firebase_155b6be5 {
+      abstract "FirebaseCommonDalImplementation" as firebase_common_dal_implementation_3d9c2fd5 {
+        + EntityName: string
+        # _Repo: CollectionReference
+        # _entityName: string
+        # _repoFn: (entityName: string) => CollectionReference
+        # _snapshotToArray(snapshot: QuerySnapshot): DocumentData[]
+        + addBulk(_entities: Partial<Entity>[]): Promise<Entity[]>
+        # constructor(params: {\n entityName: string;\n repoFn: (entityName: string) => CollectionReference \n})
+        + editBulk(_entities: Partial<Entity>[]): Promise<Entity[]>
+        + findMany(_options?: OrmFindManyOptions): Promise<Entity[]>
+        + findOne(_options?: OrmFindOneOptions): Promise<Entity>
+        + findOneById(_id: string,\n _options?: OrmFindOneByIdOptions): Promise<Entity>
+        + removeBulk(_entity: Partial<Entity>[]): Promise<void>
+        + removeByIds(_ids: string[]): Promise<void>
+      }
+    }
+@enduml

@@ -12,6 +12,10 @@ This project is intended to be used in typescript project to validate and add ty
 <!-- toc -->
 
 - [Install](#install)
+- [Usage](#usage)
+- [Idea/Explanation](#ideaexplanation)
+  * [common-dal.ts](#common-dalts)
+  * [common-dal-implementable.ts](#common-dal-implementablets)
 
 <!-- tocstop -->
 
@@ -20,3 +24,25 @@ This project is intended to be used in typescript project to validate and add ty
 `npm i @beecode/msh-orm`
 
 ## Usage
+
+
+## Idea/Explanation
+
+The idea is to make simple ORM to use in business logic so that using any ORM framework the framework code will not spill into business logic.  
+This way we can use simple ORM to manipulate/filter in most use cases and whenever there is complicated use case we can drop down to DAL-Implementation layer and use frameworks specific ORM.
+
+In `dal` folder we have two `common-dal` files.  
+
+### common-dal.ts
+
+`common-dal` is an abstract class which needs to be extended by our entities dal class.  
+Here we need to implement transformation between model and entity because our model does not need to be one to one with our entity
+
+After doing this our dal has simple curd/filter operations available.
+
+### common-dal-implementable.ts
+
+`common-dal-implementable.ts` is generic interface for implementing dal. Now that we have our entity dal we need to connect it with implementation which is directly talking to our data storage. We can store our data in memory, database or any medium that can store data, event third party service.  
+Here we have few implementation available (memory, typeorm, firebase). We need to create implementation for our data storage.
+
+So our dal implementation need sto implement interface from `common-dal-implementable.ts` and, if we want to use memory dal, we need to extend abstract class from `memory-common-dal-implementation.ts` (you can write your own implementation for any data storage).
