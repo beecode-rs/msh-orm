@@ -23,15 +23,6 @@ export type OrmLogicalOperationsType = typeof ORM_LOGICAL_OPERATIONS[number]
 export const ORM_FILTER_OPERATIONS = [...ORM_COMPARISON_OPERATIONS, ...ORM_LOGICAL_OPERATIONS] as const
 export type OrmFilterOperationsType = typeof ORM_FILTER_OPERATIONS[number]
 
-export enum OrmBetweenInclude {
-  FROM = 'from',
-  TO = 'to',
-  BOTH = 'both',
-}
-
-export const ORM_BETWEEN_INCLUDE = ['from', 'to', 'both'] as const
-export type OrmBetweenIncludeType = typeof ORM_BETWEEN_INCLUDE[number]
-
 export type OrmFilterOperationsKey = OrmFilterOperationsType | string
 
 export type OrmFilterOption = { [k: OrmFilterOperationsKey]: OrmFilterOption | any }
@@ -103,33 +94,14 @@ export const Not = (value: OrmFilterOption): { [OrmLogicalOperator.NOT]: OrmFilt
  * Between
  */
 
-export const betweenIncludeOperation = (options: { includeFrom: boolean; includeTo: boolean }): OrmBetweenInclude | undefined => {
-  const { includeTo, includeFrom } = options
-
-  switch (true) {
-    case includeFrom && includeTo:
-      return OrmBetweenInclude.BOTH
-    case includeTo:
-      return OrmBetweenInclude.TO
-    case includeFrom:
-      return OrmBetweenInclude.FROM
-    default:
-      return undefined
-  }
-}
-
 export const Between = (
   valueFrom: any,
-  valueTo: any,
-  options?: { includeFrom?: boolean; includeTo?: boolean }
+  valueTo: any
 ): {
-  [OrmComparisonOperator.BETWEEN]: [any, any] | [any, any, OrmBetweenIncludeType | undefined]
+  [OrmComparisonOperator.BETWEEN]: [any, any]
 } => {
   const result: [any, any] = [valueFrom, valueTo]
-  const { includeFrom = false, includeTo = false } = options ?? {}
-  const includeOperation = betweenIncludeOperation({ includeTo, includeFrom })
-  if (!includeOperation) return { [OrmComparisonOperator.BETWEEN]: result }
-  return { [OrmComparisonOperator.BETWEEN]: [...result, includeOperation] }
+  return { [OrmComparisonOperator.BETWEEN]: result }
 }
 
 /**

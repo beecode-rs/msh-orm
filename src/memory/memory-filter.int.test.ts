@@ -1,7 +1,7 @@
 import { Between, GreaterThen, GreaterThenEqual, In, LessThen, LessThenEqual, Not, NotEqual, Or } from '../dal/filter'
 import { memoryFilter } from './memory-filter'
 
-xdescribe('MemoryFilter', () => {
+describe('MemoryFilter', () => {
   const data = [
     { id: 1, test: 'test1', date: new Date('2022-01-12 12:13'), meta: { a: 1, b: 21 } },
     { id: 2, test: 'test2', date: new Date('2022-02-12 12:13'), meta: { a: 2, b: 22 } },
@@ -151,38 +151,14 @@ xdescribe('MemoryFilter', () => {
     })
 
     describe('between', () => {
-      it('should filter data between two ids', () => {
-        const result = memoryFilter.filter({ data, filter: { id: Between(1, 4) } })
-        expect(result).toEqual([data[1], data[2]])
-      })
-      it('should filter data between two ids (includeFrom)', () => {
-        const result = memoryFilter.filter({ data, filter: { id: Between(1, 4, { includeFrom: true }) } })
-        expect(result).toEqual([data[0], data[1], data[2]])
-      })
-      it('should filter data between two ids (includeTo)', () => {
-        const result = memoryFilter.filter({ data, filter: { id: Between(1, 4, { includeTo: true }) } })
-        expect(result).toEqual([data[1], data[2], data[3]])
-      })
       it('should filter data between two ids (includeBoth)', () => {
-        const result = memoryFilter.filter({ data, filter: { id: Between(1, 4, { includeFrom: true, includeTo: true }) } })
+        const result = memoryFilter.filter({ data, filter: { id: Between(1, 4) } })
         expect(result).toEqual([data[0], data[1], data[2], data[3]])
-      })
-      it('should filter data between two nested props', () => {
-        const result = memoryFilter.filter({ data, filter: { meta: { a: Between(1, 4) } } })
-        expect(result).toEqual([data[1], data[2]])
-      })
-      it('should filter data between two nested props (includeFrom)', () => {
-        const result = memoryFilter.filter({ data, filter: { meta: { a: Between(1, 4, { includeFrom: true }) } } })
-        expect(result).toEqual([data[0], data[1], data[2]])
-      })
-      it('should filter data between two nested props (includeTo)', () => {
-        const result = memoryFilter.filter({ data, filter: { meta: { a: Between(1, 4, { includeTo: true }) } } })
-        expect(result).toEqual([data[1], data[2], data[3]])
       })
       it('should filter data between two nested props (includeBoth)', () => {
         const result = memoryFilter.filter({
           data,
-          filter: { meta: { a: Between(1, 4, { includeFrom: true, includeTo: true }) } },
+          filter: { meta: { a: Between(1, 4) } },
         })
         expect(result).toEqual([data[0], data[1], data[2], data[3]])
       })

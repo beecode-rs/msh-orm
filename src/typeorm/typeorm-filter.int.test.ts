@@ -1,6 +1,14 @@
-import { Between, GreaterThen, In, Not, NotEqual, Or } from '../dal/filter'
+import { Between, GreaterThen, GreaterThenEqual, In, LessThen, LessThenEqual, Not, NotEqual, Or } from '../dal/filter'
 import { typeormFilter } from './typeorm-filter'
-import { Between as TBetween, In as TIn, MoreThan as TMoreThan, Not as TNot } from 'typeorm'
+import {
+  Between as TBetween,
+  In as TIn,
+  LessThan as TLessThan,
+  LessThanOrEqual as TLessThanOrEqual,
+  MoreThan as TMoreThan,
+  MoreThanOrEqual as TMoreThanOrEqual,
+  Not as TNot,
+} from 'typeorm'
 
 describe('MemoryFilter', () => {
   describe('filter', () => {
@@ -78,45 +86,45 @@ describe('MemoryFilter', () => {
         const result = typeormFilter.filter({ filter: GreaterThen({ id: 3 }) })
         expect(result).toEqual(TMoreThan({ id: 3 }))
       })
-      // it('should filter greater then meta.a', () => { // TODO IMPLEMENT THIS TO WORK
-      //   const result = typeormFilter.filter({ filter: GreaterThen({ meta: { a: 3 } }) })
-      //   expect(result).toEqual(MoreThen({ meta: { a: 3 } }))
-      // })
+      it('should filter greater then meta.a', () => {
+        const result = typeormFilter.filter({ filter: GreaterThen({ meta: { a: 3 } }) })
+        expect(result).toEqual(TMoreThan({ meta: { a: 3 } }))
+      })
     })
 
-    // describe('greater then or equal', () => {
-    //   it('should filter greater then or equal id', () => {
-    //     const result = typeormFilter.filter({ filter: GreaterThenEqual({ id: 3 }) })
-    //     expect(result).toEqual([data[2], data[3], data[4], data[5]])
-    //   })
-    //   it('should filter greater then or equal meta.a', () => {
-    //     const result = typeormFilter.filter({ filter: GreaterThenEqual({ meta: { a: 3 } }) })
-    //     expect(result).toEqual([data[2], data[3], data[4], data[5]])
-    //   })
-    // })
-    //
-    // describe('Less then or equal', () => {
-    //   it('should filter Less then id', () => {
-    //     const result = typeormFilter.filter({ filter: LessThen({ id: 3 }) })
-    //     expect(result).toEqual([data[0], data[1]])
-    //   })
-    //   it('should filter Less then meta.a', () => {
-    //     const result = typeormFilter.filter({ filter: LessThen({ meta: { a: 3 } }) })
-    //     expect(result).toEqual([data[0], data[1]])
-    //   })
-    // })
-    //
-    // describe('Less then or equal', () => {
-    //   it('should filter Less then or equal id', () => {
-    //     const result = typeormFilter.filter({ filter: LessThenEqual({ id: 3 }) })
-    //     expect(result).toEqual([data[0], data[1], data[2]])
-    //   })
-    //   it('should filter Less then or equal meta.a', () => {
-    //     const result = typeormFilter.filter({ filter: LessThenEqual({ meta: { a: 3 } }) })
-    //     expect(result).toEqual([data[0], data[1], data[2]])
-    //   })
-    // })
-    //
+    describe('greater then or equal', () => {
+      it('should filter greater then or equal id', () => {
+        const result = typeormFilter.filter({ filter: GreaterThenEqual({ id: 3 }) })
+        expect(result).toEqual(TMoreThanOrEqual({ id: 3 }))
+      })
+      it('should filter greater then or equal meta.a', () => {
+        const result = typeormFilter.filter({ filter: GreaterThenEqual({ meta: { a: 3 } }) })
+        expect(result).toEqual(TMoreThanOrEqual({ meta: { a: 3 } }))
+      })
+    })
+
+    describe('Less then or equal', () => {
+      it('should filter Less then id', () => {
+        const result = typeormFilter.filter({ filter: LessThen({ id: 3 }) })
+        expect(result).toEqual(TLessThan({ id: 3 }))
+      })
+      it('should filter Less then meta.a', () => {
+        const result = typeormFilter.filter({ filter: LessThen({ meta: { a: 3 } }) })
+        expect(result).toEqual(TLessThan({ meta: { a: 3 } }))
+      })
+    })
+
+    describe('Less then or equal', () => {
+      it('should filter Less then or equal id', () => {
+        const result = typeormFilter.filter({ filter: LessThenEqual({ id: 3 }) })
+        expect(result).toEqual(TLessThanOrEqual({ id: 3 }))
+      })
+      it('should filter Less then or equal meta.a', () => {
+        const result = typeormFilter.filter({ filter: LessThenEqual({ meta: { a: 3 } }) })
+        expect(result).toEqual(TLessThanOrEqual({ meta: { a: 3 } }))
+      })
+    })
+
     describe('or', () => {
       it('should filter data by id and or operator', () => {
         const result = typeormFilter.filter({ filter: Or({ id: 3 }, { id: 4 }) })
@@ -144,37 +152,11 @@ describe('MemoryFilter', () => {
     describe('between', () => {
       it('should filter data between two ids', () => {
         const result = typeormFilter.filter({ filter: { id: Between(1, 4) } })
-        expect(result).toEqual(TBetween(1, 4))
-      })
-      it('should filter data between two ids (includeFrom)', () => {
-        const result = typeormFilter.filter({ filter: { id: Between(1, 4, { includeFrom: true }) } })
-        expect(result).toEqual(TBetween(1, 4))
-      })
-      it('should filter data between two ids (includeTo)', () => {
-        const result = typeormFilter.filter({ filter: { id: Between(1, 4, { includeTo: true }) } })
-        expect(result).toEqual(TBetween(1, 4))
-      })
-      it('should filter data between two ids (includeBoth)', () => {
-        const result = typeormFilter.filter({ filter: { id: Between(1, 4, { includeFrom: true, includeTo: true }) } })
-        expect(result).toEqual(TBetween(1, 4))
+        expect(result).toEqual({ id: TBetween(1, 4) })
       })
       it('should filter data between two nested props', () => {
         const result = typeormFilter.filter({ filter: { meta: { a: Between(1, 4) } } })
-        expect(result).toEqual(TBetween(1, 4))
-      })
-      it('should filter data between two nested props (includeFrom)', () => {
-        const result = typeormFilter.filter({ filter: { meta: { a: Between(1, 4, { includeFrom: true }) } } })
-        expect(result).toEqual(TBetween(1, 4))
-      })
-      it('should filter data between two nested props (includeTo)', () => {
-        const result = typeormFilter.filter({ filter: { meta: { a: Between(1, 4, { includeTo: true }) } } })
-        expect(result).toEqual(TBetween(1, 4))
-      })
-      it('should filter data between two nested props (includeBoth)', () => {
-        const result = typeormFilter.filter({
-          filter: { meta: { a: Between(1, 4, { includeFrom: true, includeTo: true }) } },
-        })
-        expect(result).toEqual(TBetween(1, 4))
+        expect(result).toEqual({ meta: { a: TBetween(1, 4) } })
       })
     })
   })

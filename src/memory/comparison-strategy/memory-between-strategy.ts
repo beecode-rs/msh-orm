@@ -1,4 +1,4 @@
-import { OrmBetweenInclude, OrmComparisonOperator } from '../../dal/filter'
+import { OrmComparisonOperator } from '../../dal/filter'
 import { memoryOrmUtil } from '../memory-orm-util'
 import { MemoryComparisonStrategy } from './memory-comparison-strategy'
 import get from 'lodash.get'
@@ -8,17 +8,15 @@ export class MemoryBetweenStrategy<Entity> implements MemoryComparisonStrategy<E
     const {
       data,
       keys,
-      filter: [from, to, options],
+      filter: [from, to],
     } = params
-    const includeFrom = [OrmBetweenInclude.FROM, OrmBetweenInclude.BOTH].includes(options)
-    const includeTo = [OrmBetweenInclude.TO, OrmBetweenInclude.BOTH].includes(options)
 
     const simpleFrom = memoryOrmUtil.simplifyObject(from)
     const simpleTo = memoryOrmUtil.simplifyObject(to)
     return data.filter((d) => {
       const simpleFilter = memoryOrmUtil.simplifyObject(get(d, keys.join('.')))
-      const passedFromCheck = includeFrom ? simpleFrom <= simpleFilter : simpleFrom < simpleFilter
-      const passedToCheck = includeTo ? simpleFilter <= simpleTo : simpleFilter < simpleTo
+      const passedFromCheck = simpleFrom <= simpleFilter
+      const passedToCheck = simpleFilter <= simpleTo
       return passedFromCheck && passedToCheck
     })
   }
