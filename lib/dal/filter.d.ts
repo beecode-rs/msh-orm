@@ -1,81 +1,108 @@
-export declare enum OrmFilterOperations {
+export declare enum OrmComparisonOperator {
     NOT_EQUAL = "$<>",
     GREATER_THEN = "$>",
     GREATER_THEN_EQUAL = "$>=",
     LESS_THEN = "$<",
     LESS_THEN_EQUAL = "$<=",
-    NOT = "$not",
     BETWEEN = "$between",
-    INCLUDE_FROM = "$inc-from",
-    INCLUDE_TO = "$inc-to",
-    INCLUDE_BOTH = "$inc-both",
-    IN = "$in",
-    OR = "$or"
+    IN = "$in"
 }
-export declare const ORM_FILTER_OPERATIONS: readonly ["$<>", "$>", "$>=", "$<", "$<=", "$not", "$between", "$inc-from", "$inc-to", "$inc-both", "$in", "$or"];
+export declare enum OrmLogicalOperator {
+    NOT = "$not",
+    OR = "$or",
+    AND = "$and"
+}
+export declare const ORM_COMPARISON_OPERATIONS: readonly ["$<>", "$>", "$>=", "$<", "$<=", "$between", "$in", "$not"];
+export declare type OrmComparisonOperationsType = typeof ORM_COMPARISON_OPERATIONS[number];
+export declare const ORM_LOGICAL_OPERATIONS: readonly ["$or", "$and"];
+export declare type OrmLogicalOperationsType = typeof ORM_LOGICAL_OPERATIONS[number];
+export declare const ORM_FILTER_OPERATIONS: readonly ["$<>", "$>", "$>=", "$<", "$<=", "$between", "$in", "$not", "$or", "$and"];
 export declare type OrmFilterOperationsType = typeof ORM_FILTER_OPERATIONS[number];
-export declare type FilterOperationsKey = OrmFilterOperationsType | string;
-export declare type FilterOption = {
-    [k: FilterOperationsKey]: FilterOption | any;
+export declare type OrmFilterOperationsKey = OrmFilterOperationsType | string;
+export declare type OrmFilterOption = {
+    [k: OrmFilterOperationsKey]: OrmFilterOption | any;
 };
 export declare type OrmFilterOptions = {
-    filter: FilterOption;
+    filter: OrmFilterOption;
 };
-export declare const Equal: (value: FilterOption) => FilterOption;
-export declare const EQ: (value: FilterOption) => FilterOption;
-export declare const NotEqual: (value: FilterOption) => {
-    [OrmFilterOperations.NOT_EQUAL]: FilterOption;
+/**
+ * Equal
+ */
+export declare const Equal: (value: OrmFilterOption) => OrmFilterOption;
+export declare const EQ: (value: OrmFilterOption) => OrmFilterOption;
+/**
+ * Not Equal
+ */
+export declare const NotEqual: (value: OrmFilterOption) => {
+    [OrmComparisonOperator.NOT_EQUAL]: OrmFilterOption;
 };
-export declare const NEQ: (value: FilterOption) => {
-    [OrmFilterOperations.NOT_EQUAL]: FilterOption;
+export declare const NEQ: (value: OrmFilterOption) => {
+    [OrmComparisonOperator.NOT_EQUAL]: OrmFilterOption;
 };
-export declare const GreaterThen: (value: FilterOption) => {
-    [OrmFilterOperations.GREATER_THEN]: FilterOption;
+/**
+ * Greater Then
+ */
+export declare const GreaterThen: (value: OrmFilterOption) => {
+    [OrmComparisonOperator.GREATER_THEN]: OrmFilterOption;
 };
-export declare const GT: (value: FilterOption) => {
-    [OrmFilterOperations.GREATER_THEN]: FilterOption;
+export declare const GT: (value: OrmFilterOption) => {
+    [OrmComparisonOperator.GREATER_THEN]: OrmFilterOption;
 };
-export declare const GreaterThenEqual: (value: FilterOption) => {
-    [OrmFilterOperations.GREATER_THEN_EQUAL]: FilterOption;
+/**
+ * Greater Then Or Equal
+ */
+export declare const GreaterThenEqual: (value: OrmFilterOption) => {
+    [OrmComparisonOperator.GREATER_THEN_EQUAL]: OrmFilterOption;
 };
-export declare const GTE: (value: FilterOption) => {
-    [OrmFilterOperations.GREATER_THEN_EQUAL]: FilterOption;
+export declare const GTE: (value: OrmFilterOption) => {
+    [OrmComparisonOperator.GREATER_THEN_EQUAL]: OrmFilterOption;
 };
-export declare const LessThen: (value: FilterOption) => {
-    [OrmFilterOperations.LESS_THEN]: FilterOption;
+/**
+ * Less Then
+ */
+export declare const LessThen: (value: OrmFilterOption) => {
+    [OrmComparisonOperator.LESS_THEN]: OrmFilterOption;
 };
-export declare const LT: (value: FilterOption) => {
-    [OrmFilterOperations.LESS_THEN]: FilterOption;
+export declare const LT: (value: OrmFilterOption) => {
+    [OrmComparisonOperator.LESS_THEN]: OrmFilterOption;
 };
-export declare const LessThenEqual: (value: FilterOption) => {
-    [OrmFilterOperations.LESS_THEN_EQUAL]: FilterOption;
+/**
+ * Less Then Or Equal
+ */
+export declare const LessThenEqual: (value: OrmFilterOption) => {
+    [OrmComparisonOperator.LESS_THEN_EQUAL]: OrmFilterOption;
 };
-export declare const LTE: (value: FilterOption) => {
-    [OrmFilterOperations.LESS_THEN_EQUAL]: FilterOption;
+export declare const LTE: (value: OrmFilterOption) => {
+    [OrmComparisonOperator.LESS_THEN_EQUAL]: OrmFilterOption;
 };
-export declare const Not: (value: FilterOption) => {
-    [OrmFilterOperations.NOT]: FilterOption;
+/**
+ * Not
+ */
+export declare const Not: (value: OrmFilterOption) => {
+    [OrmLogicalOperator.NOT]: OrmFilterOption;
 };
-export declare const betweenIncludeOperation: (options?: {
-    includeFrom?: boolean | undefined;
-    includeTo?: boolean | undefined;
-} | undefined) => OrmFilterOperations.INCLUDE_BOTH | OrmFilterOperations.INCLUDE_FROM | OrmFilterOperations.INCLUDE_TO | undefined;
-export declare const Between: (valueFrom: FilterOption, valueTo: FilterOption, options?: {
-    includeFrom?: boolean | undefined;
-    includeTo?: boolean | undefined;
-} | undefined) => {
-    [OrmFilterOperations.BETWEEN]: [FilterOption, FilterOption] | {
-        [OrmFilterOperations.INCLUDE_BOTH]: [FilterOption, FilterOption];
-    } | {
-        [OrmFilterOperations.INCLUDE_FROM]: [FilterOption, FilterOption];
-    } | {
-        [OrmFilterOperations.INCLUDE_TO]: [FilterOption, FilterOption];
-    };
+/**
+ * Between
+ */
+export declare const Between: (valueFrom: any, valueTo: any) => {
+    [OrmComparisonOperator.BETWEEN]: [any, any];
 };
-export declare const In: (...values: FilterOption[]) => {
-    [OrmFilterOperations.IN]: FilterOption[];
+/**
+ * In
+ */
+export declare const In: (...values: any[]) => {
+    [OrmComparisonOperator.IN]: any[];
 };
-export declare const Or: (...values: FilterOption[]) => {
-    [OrmFilterOperations.OR]: FilterOption[];
+/**
+ * Or
+ */
+export declare const Or: (...values: OrmFilterOption[]) => {
+    [OrmLogicalOperator.OR]: OrmFilterOption[];
+};
+/**
+ * And
+ */
+export declare const And: (...values: OrmFilterOption[]) => {
+    [OrmLogicalOperator.AND]: OrmFilterOption[];
 };
 //# sourceMappingURL=filter.d.ts.map

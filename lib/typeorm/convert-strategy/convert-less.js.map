@@ -1,0 +1,1 @@
+{"version":3,"file":"convert-less.js","sourceRoot":"","sources":["../../../src/typeorm/convert-strategy/convert-less.ts"],"names":[],"mappings":";;;AACA,qCAAkC;AAElC,MAAa,WAAW;IACf,OAAO,CAAC,MAAuB;QACpC,MAAM,EAAE,MAAM,EAAE,GAAG,MAAM,CAAA;QACzB,OAAO,IAAA,kBAAQ,EAAC,MAAM,CAAC,CAAA;IACzB,CAAC;CACF;AALD,kCAKC"}

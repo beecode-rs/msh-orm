@@ -1,0 +1,1 @@
+{"version":3,"file":"firebase-web-filter.js","sourceRoot":"","sources":["../../src/firebase-web/firebase-web-filter.ts"],"names":[],"mappings":";;;AACA,+EAAwE;AAE3D,QAAA,iBAAiB,GAAG;IAC/B,MAAM,EAAE,CAAC,MAAqC,EAAS,EAAE;QACvD,MAAM,EAAE,MAAM,GAAG,EAAE,EAAE,GAAG,MAAM,aAAN,MAAM,cAAN,MAAM,GAAI,EAAE,CAAA;QACpC,OAAO,sDAAwB,CAAC,OAAO,CAAC,EAAE,MAAM,EAAE,CAAC,CAAA;IACrD,CAAC;CACF,CAAA"}

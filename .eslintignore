@@ -6,3 +6,4 @@ lib
 node_modules
 resource
 test
+__mocks__

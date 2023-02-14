@@ -1,0 +1,1 @@
+{"version":3,"file":"memory-logical-service.d.ts","sourceRoot":"","sources":["../../../src/memory/logical-strategy/memory-logical-service.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,eAAe,EAAsB,MAAM,kBAAkB,CAAA;AACtE,OAAO,EAAE,wBAAwB,EAAE,MAAM,mDAAmD,CAAA;AAE5F,OAAO,EAAE,qBAAqB,EAAE,MAAM,2BAA2B,CAAA;AA+BjE,eAAO,MAAM,oBAAoB;;aAzBxB,MAAM;gBACH,eAAe;oBACX,MAAM,EAAE;;;CAuBiB,CAAA"}

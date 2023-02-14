@@ -1,0 +1,1 @@
+{"version":3,"file":"memory-logical-strategy.d.ts","sourceRoot":"","sources":["../../../src/memory/logical-strategy/memory-logical-strategy.ts"],"names":[],"mappings":"AAAA,MAAM,WAAW,qBAAqB,CAAC,MAAM;IAC3C,MAAM,CAAC,MAAM,EAAE;QAAE,IAAI,EAAE,MAAM,EAAE,CAAC;QAAC,IAAI,CAAC,EAAE,MAAM,EAAE,CAAA;KAAE,GAAG,MAAM,EAAE,CAAA;CAC9D"}

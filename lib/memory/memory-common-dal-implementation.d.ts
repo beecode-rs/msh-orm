@@ -1,12 +1,12 @@
 import { CommonDalImplementable, EntityType, OrmFindManyOptions, OrmFindOneOptions } from '../dal/common-dal-implementable';
-import { OrmFilterOptions } from '../dal/filter';
-import { OrmPagingOptions, Pagination } from '../dal/pagination';
+import { OrmFilterOption, OrmFilterOptions } from '../dal/filter';
+import { OrmPagingOptions } from '../dal/pagination';
 export declare abstract class MemoryCommonDalImplementation<Entity extends EntityType> implements CommonDalImplementable<Entity> {
     protected static _dbMemory: {
         [key: string]: any[];
     };
     protected readonly _entityName: string;
-    protected readonly _fixedProperties?: Partial<Entity>;
+    protected readonly _fixedProperties?: OrmFilterOption;
     protected _predefinedMock?: any;
     protected readonly _dbMockFileLocation: string;
     get EntityName(): string;
@@ -14,11 +14,10 @@ export declare abstract class MemoryCommonDalImplementation<Entity extends Entit
     protected _generateUniqueId(): any;
     protected constructor(params: {
         entityName: string;
-        fixedProperties?: Partial<Entity>;
+        fixedProperties?: OrmFilterOption;
         predefinedMock?: any;
         dbMockFileLocation: string;
     });
-    protected _slicePaging(data: Entity[], pagination?: Pagination): Entity[];
     protected _findWhere(params: Partial<OrmFilterOptions & OrmPagingOptions>): Entity[];
     protected _findOneWhere(entity: Partial<Entity>): {
         index: number;
