@@ -12,6 +12,7 @@ This project is intended to be used in typescript project to validate and add ty
 <!-- toc -->
 
 - [Install](#install)
+- [Usage](#usage)
 
 <!-- tocstop -->
 

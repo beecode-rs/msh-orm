@@ -1,0 +1,3 @@
+console.log('test'); // eslint-disable-line no-console
+export {};
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi9zcmMvaW5kZXgudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsT0FBTyxDQUFDLEdBQUcsQ0FBQyxNQUFNLENBQUMsQ0FBQSxDQUFDLGlDQUFpQyIsInNvdXJjZXNDb250ZW50IjpbImNvbnNvbGUubG9nKCd0ZXN0JykgLy8gZXNsaW50LWRpc2FibGUtbGluZSBuby1jb25zb2xlXG4iXX0=

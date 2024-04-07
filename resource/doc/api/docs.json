@@ -1,0 +1,59 @@
+{
+	"id": 0,
+	"name": "@beecode/msh-orm",
+	"variant": "project",
+	"kind": 1,
+	"flags": {},
+	"children": [
+		{
+			"id": 2,
+			"name": "index",
+			"variant": "declaration",
+			"kind": 2,
+			"flags": {},
+			"sources": [
+				{
+					"fileName": "index.ts",
+					"line": 1,
+					"character": 0,
+					"url": "https://github.com/beecode-rs/msh-orm/blob/cf81e4d/src/index.ts#L1"
+				}
+			]
+		},
+		{
+			"id": 1,
+			"name": "index-jest-setup",
+			"variant": "declaration",
+			"kind": 2,
+			"flags": {},
+			"sources": [
+				{
+					"fileName": "index-jest-setup.ts",
+					"line": 1,
+					"character": 0,
+					"url": "https://github.com/beecode-rs/msh-orm/blob/cf81e4d/src/index-jest-setup.ts#L1"
+				}
+			]
+		}
+	],
+	"groups": [
+		{
+			"title": "Modules",
+			"children": [
+				2,
+				1
+			]
+		}
+	],
+	"packageName": "@beecode/msh-orm",
+	"symbolIdMap": {
+		"1": {
+			"sourceFileName": "src/index-jest-setup.ts",
+			"qualifiedName": ""
+		},
+		"2": {
+			"sourceFileName": "src/index.ts",
+			"qualifiedName": ""
+		}
+	}
+}
