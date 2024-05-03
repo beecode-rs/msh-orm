@@ -1,6 +1,5 @@
 {
 	"compilerOptions": {
-		"allowJs": true,
 		"allowSyntheticDefaultImports": true,
 		"alwaysStrict": true,
 		"baseUrl": "./",
@@ -26,21 +25,8 @@
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
 		"outDir": "./dist",
-		"paths": {
-			"#packageJson": [
-				"./package.json"
-			],
-			"#src": [
-				"./src/index"
-			],
-			"#src/*": [
-				"./src/*"
-			]
-		},
-		"pretty": true,
 		"resolveJsonModule": true,
 		"resolvePackageJsonImports": true,
-		"rootDir": "./",
 		"skipLibCheck": true,
 		"strict": true,
 		"strictFunctionTypes": true,
@@ -49,8 +35,10 @@
 		"traceResolution": false
 	},
 	"include": [
-		"./*.*",
-		"./src",
-		"./test"
-	]
+		"./"
+	],
+	"ts-node": {
+		"esm": true,
+		"experimentalSpecifierResolution": "node"
+	}
 }
