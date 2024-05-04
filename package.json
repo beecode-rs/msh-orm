@@ -130,7 +130,7 @@
 		"@beecode/msh-logger": "1.0.3"
 	},
 	"devDependencies": {
-		"@babel/cli": "7.24.1",
+		"@babel/cli": "7.24.5",
 		"@babel/core": "7.24.4",
 		"@babel/plugin-proposal-decorators": "7.24.1",
 		"@babel/plugin-transform-modules-commonjs": "7.24.1",
