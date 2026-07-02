@@ -88,7 +88,7 @@
 	},
 	"dependencies": {
 		"@beecode/msh-config": "^1.2.2",
-		"@beecode/msh-logger": "^2.0.0"
+		"@beecode/msh-logger": "^2.0.2"
 	},
 	"devDependencies": {
 		"@commitlint/cli": "^21.2.0",
